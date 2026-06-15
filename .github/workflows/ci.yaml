@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted   # or self-hosted runner
+    runs-on: ubuntu-latest   # or self-hosted runner
 
     steps:
       # Step 1: Checkout code
