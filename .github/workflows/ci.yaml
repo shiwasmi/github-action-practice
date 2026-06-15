@@ -1,0 +1,40 @@
+name: Java CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: self-hosted   # or self-hosted runner
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Java (Amazon Corretto or OpenJDK)
+      - name: Set up Java 17 (Corretto)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'   # options: 'temurin', 'zulu', 'corretto'
+          java-version: '17'
+
+      # Step 3: Cache Maven dependencies (optional, speeds up builds)
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Step 4: Build with Maven
+      - name: Build project
+        run: mvn -B package --file pom.xml
+
+      # Step 5: Run tests
+      - name: Run unit tests
+        run: mvn test
