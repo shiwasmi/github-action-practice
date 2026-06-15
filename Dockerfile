@@ -23,7 +23,7 @@ COPY --from=builder /app/target/github-action-practice*.jar /usr/local/tomcat/we
 EXPOSE 8080
 
 # Run as non-root user
-USER githubaction-lab
+USER github-action-practice
 
 # Default command to run Tomcat
 CMD ["catalina.sh", "run"]
