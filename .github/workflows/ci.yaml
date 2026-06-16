@@ -11,7 +11,7 @@ env:
   VERSION: 1.1.${{ github.run_number }}
   IMAGE_LOCAL: github-action-practice:latest
   IMAGE_DOCKERHUB: sagarchattar/github-action-practice:latest
-  IMAGE_ECR: 251335054837.dkr.ecr.ap-south-1.amazonaws.com/sagardocker:latest
+  IMAGE_ECR: 251335054837.dkr.ecr.ap-south-1.amazonaws.com/sagarchattar:latest
 
 jobs:
   build:
