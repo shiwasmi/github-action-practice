@@ -22,7 +22,7 @@ COPY --from=builder /app/target/github-action-practice*.jar /usr/local/tomcat/we
 # Expose Tomcat port
 EXPOSE 8080
 
-# Run as non-root user
+# Run as non-root userss
 USER github-action-practice
 
 # Default command to run Tomcat
