@@ -31,33 +31,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Java 21
+      - name: Set up Java 21 with Maven
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
-
-      - name: Install Maven 3.9.19 if not present
-        shell: bash
-        run: |
-          set -e
-          MAVEN_VERSION=3.9.19
-          MAVEN_DIR=/opt/maven/apache-maven-$MAVEN_VERSION
-          MAVEN_BIN=$MAVEN_DIR/bin/mvn
-
-          if [ -x "$MAVEN_BIN" ]; then
-            echo "✅ Maven $MAVEN_VERSION already installed"
-          else
-            echo "⬇️ Installing Maven $MAVEN_VERSION..."
-            sudo dnf install -y wget tar
-            sudo mkdir -p /opt/maven
-            cd /tmp
-            wget https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
-            sudo tar -xzf apache-maven-$MAVEN_VERSION-bin.tar.gz -C /opt/maven
-            sudo ln -sf $MAVEN_BIN /usr/local/bin/mvn
-          fi
-
-          mvn -version
+          cache: maven   # handles Maven installation & caching automatically
 
       - name: Cache Maven packages
         uses: actions/cache@v4
@@ -102,22 +81,14 @@ jobs:
           docker tag $IMAGE_LOCAL $IMAGE_DOCKERHUB_LATEST
           docker tag $IMAGE_LOCAL $IMAGE_ECR
           docker tag $IMAGE_LOCAL $IMAGE_ECR_LATEST
-          
-          #- name: Cache Trivy DB
-          # uses: actions/cache@v4
-          # with:
-          #   path: ~/.cache/trivy
-          # key: trivy-db-${{ runner.os }}-${{ github.sha }}
-          # restore-keys: trivy-db-${{ runner.os }}
-          
-          #- name: Scan Docker Image with Trivy
-          # uses: aquasecurity/trivy-action@v0.36.0
-          #  with:
-          # image-ref: ${{ env.IMAGE_LOCAL }}
-          # exit-code: '0'
-        # severity: 'CRITICAL,HIGH'
-        #  scanners: vuln   # disable secret scanning for speed
-        #  vuln-type: os,library
+
+      # Optional: enable Trivy scan once version is confirmed
+      # - name: Scan Docker Image with Trivy
+      #   uses: aquasecurity/trivy-action@v0.36.0
+      #   with:
+      #     image-ref: ${{ env.IMAGE_LOCAL }}
+      #     exit-code: '0'
+      #     severity: 'CRITICAL,HIGH'
 
       - name: Login to Docker Hub
         run: |
