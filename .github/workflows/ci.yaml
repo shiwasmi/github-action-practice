@@ -18,8 +18,8 @@ env:
   IMAGE_DOCKERHUB: sagarchattar/github-action-practice:${{ github.run_number }}
   IMAGE_DOCKERHUB_LATEST: sagarchattar/github-action-practice:latest
 
-  IMAGE_ECR: 251335054837.dkr.ecr.ap-south-1.amazonaws.com/github-action-practice:${{ github.run_number }}
-  IMAGE_ECR_LATEST: 251335054837.dkr.ecr.ap-south-1.amazonaws.com/github-action-practice:latest
+  IMAGE_ECR: 251335054837.dkr.ecr.ap-south-1.amazonaws.com/sagardocker:${{ github.run_number }}
+  IMAGE_ECR_LATEST: 251335054837.dkr.ecr.ap-south-1.amazonaws.com/sagardocker:latest
 
 jobs:
 
