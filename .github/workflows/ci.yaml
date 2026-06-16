@@ -37,11 +37,11 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Install Maven 3.9.1 if not present
+      - name: Install Maven 3.9.16 if not present
         shell: bash
         run: |
           set -e
-          MAVEN_VERSION=3.9.1
+          MAVEN_VERSION=3.9.16
           MAVEN_DIR=/opt/maven/apache-maven-$MAVEN_VERSION
           MAVEN_BIN=$MAVEN_DIR/bin/mvn
 
