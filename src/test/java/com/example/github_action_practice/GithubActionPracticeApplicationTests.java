@@ -9,8 +9,4 @@ class GithubActionPracticeApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-    void contextLoads1() {
-    }
-    void contextLoads2() {
-    }
 }
